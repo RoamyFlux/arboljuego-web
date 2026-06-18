@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TreeApp — Sistema de Gestión de Reforestación (Edición Coleccionista)</title>
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght=400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
@@ -242,7 +242,7 @@ body{
     <h1 class="hero-title">🌳 TREE<br>APP</h1>
     <p class="hero-sub">Gestión Inteligente de Reforestación<br>Diseñado para la administración eficiente de proyectos ecológicos</p>
     <div>
-      <a class="btn-pixel sound-hover" href="./TreeApp.apk" download="TreeApp.apk" onclick="triggerAchievement('📱 APK DOWNLOAD', '¡Iniciando la descarga del instalador móvil!')">▶ DESCARGAR APK</a>
+      <a class="btn-pixel sound-hover" href="index.html" onclick="triggerAchievement('🎮 GAME START', '¡Volviendo al simulador interactivo!')">◀ VOLVER AL JUEGO</a>
       <a class="btn-pixel secondary sound-hover" href="#features">VER FUNCIONES ↓</a>
     </div>
   </div>
@@ -332,7 +332,7 @@ body{
     <div class="htp-grid">
       <div class="step"><p class="step-title">Instalación del APK</p><p class="step-desc">Descarga e instala la aplicación móvil directamente en los dispositivos de campo de las brigadas.</p></div>
       <div class="step"><p class="step-title">Registro en Campo</p><p class="step-desc">Captura datos directamente en el terreno: coordenadas de plantación, tipo de árbol y datos de los alumnos.</p></div>
-      <div class="step"><p class="step-title">Sincronización</p><p class="step-desc">Sube la información recolectada al servidor centralizado de forma automática al detect conexión.</p></div>
+      <div class="step"><p class="step-title">Sincronización</p><p class="step-desc">Sube la información recolectada al servidor centralizado de forma automática al detectar conexión.</p></div>
       <div class="step"><p class="step-title">Evaluación de Avances</p><p class="step-desc">Consulta los tableros analíticos institucionales para validar el cumplimiento de las metas proyectadas.</p></div>
     </div>
   </div>
@@ -485,7 +485,6 @@ function playTone(freq, type, duration) {
   osc.start(); osc.stop(audioCtx.currentTime + duration);
 }
 
-// Vincular SFX de hover a elementos clave
 function playBlip() { playTone(587.33, 'square', 0.05); }
 function toggleCRT() {
   document.body.classList.toggle('crt-active');
@@ -494,6 +493,7 @@ function toggleCRT() {
   playBlip();
 }
 
+// Vincular SFX de hover a elementos clave
 document.querySelectorAll('.sound-hover, .feat-card, .tech-pill, .step, .control-btn').forEach(el => {
   el.addEventListener('mouseenter', playBlip);
 });
