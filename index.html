@@ -1,8 +1,3 @@
-A continuación, se presenta el código completo del archivo `index.html` editado de manera definitiva.
-
-Se ha modificado la línea del botón de descarga para implementar el atributo `download` y apuntar al nombre de archivo estandarizado `treeapp.apk`. Copie este contenido íntegro y utilícelo para reemplazar el contenido de su archivo actual antes de subirlo a su repositorio de GitHub:
-
-```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -12,467 +7,199 @@ Se ha modificado la línea del botón de descarga para implementar el atributo `
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{
-  --green:#2D7D32;--green-light:#4CAF50;--green-pale:#A5D6A7;--green-dark:#1B5E20;
-  --earth:#5D4037;--earth-light:#8D6E63;--sky:#1565C0;--sky-light:#42A5F5;
-  --amber:#F57F17;--amber-light:#FFB300;--white:#FAFAFA;--dark:#1A1A1A;
-}
+:root{\n  --green:#2D7D32;--green-light:#4CAF50;--green-pale:#A5D6A7;--green-dark:#1B5E20;\n  --earth:#5D4037;--earth-light:#8D6E63;--sky:#1565C0;--sky-light:#42A5F5;\n  --amber:#F57F17;--amber-light:#FFB300;--white:#FAFAFA;--dark:#1A1A1A;\n}
 body{
   background:#0A1628;font-family:'Inter',sans-serif;color:var(--white);overflow-x:hidden;scroll-behavior: smooth;
-  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M0 0h4v4H0zm4 4h4v4H4zm4 4h4v4H8zm4 4h4v4h-4zm-4 4h4v4H8zm-4-4h4v4H4zm-4-4h4v4H0zm12-4h8v4h-8z' fill='%234CAF50'/%3E%3C/svg%3E"), auto;
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='%234CAF50'%3E%3Cpath d='M2 2l11 11-3 1 10 10-1-9 3-1z'/%3E%3C/svg%3E"), auto;
 }
-
-/* ============ FILTRO CRT (RETRO TV EFFECT) ============ */
-.crt-overlay {
-  position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+.crt::after {
+  content: " "; display: block; position: fixed; top: 0; left: 0; bottom: 0; right: 0;
   background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-  z-index: 999; background-size: 100% 4px, 6px 100%; pointer-events: none; display: none;
+  z-index: 99999; background-size: 100% 3px, 6px 100%; pointer-events: none;
 }
-.crt-active .crt-overlay { display: block; }
-
-/* ============ CONTROLES FLOTANTES ============ */
-.floating-controls {
-  position: fixed; top: 20px; left: 20px; z-index: 1000; display: flex; gap: 10px;
+.navbar {
+  display: flex; justify-content: space-between; align-items: center; padding: 20px 50px;
+  background: rgba(10, 22, 40, 0.8); backdrop-filter: blur(10px); position: fixed; width: 100%; top: 0; z-index: 1000;
+  border-bottom: 2px solid var(--green-dark);
 }
-.control-btn {
-  background: #0D1B0D; border: 3px solid var(--green); padding: 8px 12px;
-  cursor: pointer; font-family: 'Press Start 2P', monospace; font-size: 0.55rem; color: var(--green-light);
-  box-shadow: 3px 3px 0 #000; transition: 0.1s;
+.nav-logo { font-family: 'Press Start 2P', monospace; font-size: 14px; color: var(--green-light); text-shadow: 2px 2px 0 var(--green-dark); }
+.nav-links { display: flex; gap: 20px; list-style: none; }
+.nav-links a { color: var(--white); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.3s; }
+.nav-links a:hover { color: var(--green-pale); }
+.hero {
+  min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
+  text-align: center; padding: 120px 20px 60px 20px; background: radial-gradient(circle at center, #112540 0%, #0A1628 100%);
+  position: relative;
 }
-.control-btn:hover { transform: translate(1px, 1px); box-shadow: 2px 2px 0 #000; background: var(--green-dark); }
-
-/* ============ NOTIFICACIÓN DE LOGROS ============ */
-.achievement-pop {
-  position: fixed; bottom: -100px; right: 20px; background: #1A2B1A; border: 4px solid var(--green-light);
-  padding: 15px; display: flex; align-items: center; gap: 15px; z-index: 2000;
-  font-family: 'Press Start 2P', monospace; box-shadow: 6px 6px 0 #000; transition: bottom 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+.game-title { font-family: 'Press Start 2P', monospace; font-size: 42px; color: var(--green-light); margin-bottom: 20px; text-shadow: 4px 4px 0 var(--green-dark); line-height: 1.4; }
+.game-subtitle { font-size: 18px; color: var(--green-pale); max-width: 600px; margin-bottom: 40px; line-height: 1.6; font-weight: 400; }
+.game-container {
+  background: #1A1A1A; border: 4px solid var(--green-dark); border-radius: 8px; padding: 25px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5), inset 0 0 20px rgba(0,255,0,0.05); width: 100%; max-width: 500px; position: relative;
 }
-.achievement-pop.show { bottom: 20px; }
-.ach-icon { font-size: 1.5rem; background: var(--green-dark); padding: 5px; border: 2px solid var(--green); }
-.ach-title { font-size: 0.5rem; color: var(--amber-light); margin-bottom: 5px; }
-.ach-text { font-size: 0.6rem; color: #fff; }
-
-/* ============ HERO CON CICLO TEMPORAL ============ */
-.hero{
-  min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center;
-  position:relative; overflow:hidden;
-  background: linear-gradient(180deg, #0A1628 0%, #142c42 50%, #1F4E2E 100%);
-  background-size: 100% 200%;
-  animation: dayNightCycle 20s ease-in-out infinite alternate;
-  padding:2rem 1rem;
+.stats-bar { display: flex; justify-content: space-between; margin-bottom: 20px; font-family: 'Press Start 2P', monospace; font-size: 11px; color: var(--amber-light); border-bottom: 2px dashed #333; padding-bottom: 15px; }
+.click-zone {
+  width: 100%; height: 260px; background: linear-gradient(to bottom, #1976D2, #64B5F6 70%, #8D6E63 70%, #5D4037 100%);
+  border-radius: 6px; position: relative; overflow: hidden; display: flex; justify-content: center; align-items: flex-end; padding-bottom: 20px; cursor: pointer;
 }
-@keyframes dayNightCycle {
-  0% { background-position: 0% 0%; }
-  100% { background-position: 0% 100%; }
+.pixel-tree { width: 110px; height: auto; image-rendering: pixelated; transition: transform 0.1s ease; transform-origin: bottom center; margin-bottom: 5px; }
+.pixel-tree:active { transform: scale(0.92) translateY(5px); }
+.controls-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
+.btn-pixel {
+  font-family: 'Press Start 2P', monospace; font-size: 10px; padding: 14px; border: none; border-radius: 4px;
+  cursor: pointer; text-decoration: none; text-align: center; display: inline-block; transition: transform 0.1s, box-shadow 0.1s;
 }
-
-.stars, .leaf-container {position:absolute;inset:0;pointer-events:none}
-.star{position:absolute;background:#fff;}
-@keyframes blink{0%,100%{opacity:.8}50%{opacity:.1}}
-
-/* Hojas cayendo con rotación pixel */
-.pixel-leaf-particle {
-  position: absolute; background: var(--green-light); width: 8px; height: 8px;
-  opacity: 0.8; animation: fall linear infinite; image-rendering: pixelated;
+.btn-pixel:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 currentColor !important; }
+.floating-text {
+  position: absolute; font-family: 'Press Start 2P', monospace; font-size: 14px; color: #FFF;
+  pointer-events: none; animation: floatUp 0.8s ease-out forwards; text-shadow: 2px 2px 0 #000;
 }
-@keyframes fall {
-  0% { transform: translateY(-20px) translateX(0) rotate(0deg); }
-  50% { transform: translateY(50vh) translateX(30px) rotate(90deg); background: var(--green); }
-  100% { transform: translateY(105vh) translateX(-15px) rotate(180deg); }
-}
-
-.moon{
-  position:absolute; top:8%; right:12%; width:60px; height:60px; background:#FFF9C4;
-  box-shadow:4px 4px 0 #F9A825, -4px 0 0 0 rgba(0,0,0,0.2);
-  clip-path:polygon(0 0,80% 0,100% 20%,100% 80%,80% 100%,0 100%);
-  animation: moonGlow 4s ease-in-out infinite;
-}
-@keyframes moonGlow { 0%, 100% { filter: drop-shadow(0 0 4px rgba(255,249,196,0.4)); } 50% { filter: drop-shadow(0 0 20px rgba(255,249,196,0.8)); } }
-
-.ground{
-  position:absolute;bottom:0;left:0;right:0;height:120px; background:#1B5E20; border-top:8px solid #2D7D32;
-}
-.ground::before{
-  content:'';position:absolute;top:-8px;left:0;right:0;height:8px;
-  background:repeating-linear-gradient(90deg,#4CAF50 0,#4CAF50 16px,#388E3C 16px,#388E3C 32px);
-}
-
-/* Árboles con efecto de viento pixel art */
-.pixel-tree{position:absolute; bottom:80px; transform-origin: bottom center; animation: windSway 4s ease-in-out infinite alternate; }
-@keyframes windSway { 0% { transform: skewX(-1deg); } 100% { transform: skewX(2deg); } }
-.pt-trunk{width:16px;height:24px;background:#5D4037;margin:0 auto}
-.pt-leaves{width:48px;height:48px;background:#2E7D32;margin:0 auto; box-shadow:inset -4px -4px 0 #1B5E20,inset 4px 4px 0 #43A047; clip-path:polygon(50% 0%,100% 100%,0% 100%)}
-.pt-leaves2{width:56px;height:40px;background:#388E3C;margin:-12px auto 0; clip-path:polygon(50% 0%,100% 100%,0% 100%)}
-
-.hero-title{
-  font-family:'Press Start 2P',monospace; font-size:clamp(1.8rem,6vw,3.5rem); color:#4CAF50;
-  text-shadow:4px 4px 0 #1B5E20, 8px 8px 0 rgba(0,0,0,.6); text-align:center; letter-spacing:.05em; line-height:1.4; margin-bottom:1rem; z-index:2; position:relative;
-}
-.hero-sub{
-  font-family:'Press Start 2P',monospace; font-size:clamp(.55rem,2vw,.85rem); color:#A5D6A7;
-  text-align:center; letter-spacing:.1em; z-index:2; position:relative; margin-bottom:2.5rem; line-height:2;
-}
-
-.btn-pixel{
-  font-family:'Press Start 2P',monospace; font-size:.75rem; padding:.9rem 2rem; background:#4CAF50; color:#0A1628; border:none; cursor:pointer; position:relative; box-shadow:4px 4px 0 #1B5E20, 6px 6px 0 rgba(0,0,0,.3); transition:all .08s; z-index:2; text-decoration:none; display:inline-block; letter-spacing:.05em; margin:.4rem;
-}
-.btn-pixel:hover{transform:translate(2px,2px); box-shadow:2px 2px 0 #1B5E20; background: #66BB6A;}
-.btn-pixel.secondary{background:transparent; color:#4CAF50; border:3px solid #4CAF50; box-shadow:4px 4px 0 #1B5E20}
-.btn-pixel.secondary:hover{background:#4CAF50; color:#0A1628}
-
-@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
-.scroll-hint{ position:absolute; bottom:2rem; font-family:'Press Start 2P',monospace; font-size:.5rem; color:#4CAF50; letter-spacing:.1em; animation:bounce 1.5s infinite; z-index:2; }
-
-@keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
-.float-obj{position:absolute; animation:floatY 3s ease-in-out infinite; z-index:1}
-.pixel-drop{ width:20px; height:28px; background:#42A5F5; clip-path:polygon(50% 0%,100% 60%,80% 100%,20% 100%,0% 60%); filter:drop-shadow(0 2px 0 #1565C0); }
-.pixel-bag{ width:24px; height:28px; background:#616161; border-radius:4px 4px 8px 8px; position:relative; }
-.pixel-bag::before{content:''; position:absolute; top:-6px; left:50%; transform:translateX(-50%); width:10px; height:6px; background:#757575; border-radius:2px 2px 0 0}
-
-/* ============ SECCIONES GENERALES ============ */
-.section{padding:5rem 2rem; max-width:960px; margin:0 auto}
-.section-label{ font-family:'Press Start 2P',monospace; font-size:.55rem; color:#4CAF50; letter-spacing:.2em; text-transform:uppercase; border-left:4px solid #4CAF50; padding-left:.75rem; margin-bottom:1.5rem; display:block; }
-.section-title{font-size:clamp(1.4rem,4vw,2.2rem); font-weight:700; line-height:1.2; margin-bottom:1.25rem; color:#E8F5E9}
-.about-grid{display:grid; grid-template-columns:1fr 1fr; gap:3rem; align-items:center; margin-top:3rem}
-.about-text p{color:#A5D6A7; line-height:1.8; font-size:1rem; margin-bottom:1rem}
-.about-text p strong{color:#E8F5E9}
-
-/* PANTALLA DE JUEGO DINÁMICA */
-.game-screen{
-  background:#0D1B0D; border:6px solid #2D7D32; padding:1rem; position:relative;
-  box-shadow:8px 8px 0 #1B5E20, 12px 12px 0 rgba(0,0,0,.3);
-}
-.game-screen::before{
-  content:'● ● ● GAME ENGINE SIMULATOR'; position:absolute; top:-22px; left:8px;
-  font-family: 'Press Start 2P', monospace; font-size:7px; color:#4CAF50; letter-spacing:1px;
-}
-.game-screen-inner{
-  background:#1A2B1A; padding:1rem; font-family:'Press Start 2P',monospace; font-size:.55rem; line-height:2; color:#66BB6A; min-height:170px;
-}
-.gs-hud{display:flex; justify-content:space-between; margin-bottom:1rem; border-bottom:2px solid #2D7D32; padding-bottom:.5rem; }
-.gs-label{color:#4CAF50; font-size:.45rem}
-.gs-val{color:#E8F5E9; transition: all 0.2s;}
-
-.thermometer-container { width: 100%; height: 10px; background: #0D1B0D; border: 2px solid #2D7D32; margin-top: 5px; }
-.thermometer-bar { height: 100%; width: 50%; background: var(--amber); transition: width 0.4s, background 0.4s; }
-
-.px-block{display:inline-block; width:10px; height:10px}
-.px-grass{background:#2D7D32}
-.px-dirt{background:#5D4037}
-.px-sky2{background:#0D2137}
-.px-water{background:#1E88E5}
-.px-trash{background:#616161}
-.px-player{background:#FFB300; border:1px solid #F57F17; animation: bounce 0.4s infinite alternate;}
-
-/* TARJETAS DE MECÁNICAS (NEÓN VERDE PIXEL) */
-.features-bg{background:#050E05; padding:5rem 2rem}
-.features-inner{max-width:960px; margin:0 auto}
-.features-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1.5rem; margin-top:3rem}
-.feat-card{
-  background:#0D1B0D; border:2px solid #1B5E20; padding:1.75rem 1.5rem; position:relative; transition:all .2s ease;
-}
-.feat-card::after{
-  content:''; position:absolute; bottom:-6px; right:-6px; width:100%; height:100%; border:2px solid #2D7D32; pointer-events:none; transition: all .2s;
-}
-.feat-card:hover{
-  border-color:#4CAF50; transform:translate(-4px,-4px); box-shadow: 0 0 15px rgba(76,175,80,0.4);
-}
-.feat-card:hover::after { right: -2px; bottom: -2px; border-color: #4CAF50; }
-.feat-icon{ font-size:1.8rem; margin-bottom:1rem; font-family:'Press Start 2P',monospace; display:block; transition: transform 0.3s; }
-.feat-card:hover .feat-icon { transform: scale(1.25) rotate(8deg); }
-.feat-title{font-family:'Press Start 2P',monospace; font-size:.7rem; color:#4CAF50; margin-bottom:.75rem; line-height:1.6}
-.feat-desc{color:#A5D6A7; font-size:.85rem; line-height:1.7}
-
-/* PASOS DE JUEGO (PASO DE CURSOR) */
-.htp-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:2rem; margin-top:3rem; counter-reset:steps}
-.step{position:relative; padding-top:3.5rem;}
-.step::before{
-  counter-increment:steps; content:counter(steps,"0"); position:absolute; top:0; left:0; font-family:'Press Start 2P',monospace; font-size:2rem; color:#1B5E20; line-height:1; text-shadow:2px 2px 0 #0A1628; transition: color 0.3s;
-}
-.step:hover::before { color: var(--green-light); text-shadow: 0 0 8px var(--green-light); }
-.step-title{font-family:'Press Start 2P',monospace; font-size:.65rem; color:#4CAF50; margin-bottom:.6rem; line-height:1.6}
-.step-desc{color:#A5D6A7; font-size:.9rem; line-height:1.7}
-
-/* TECH PILLS INTERACTIVAS */
-.tech-bg{background:#050E05; padding:5rem 2rem}
-.tech-inner{max-width:960px; margin:0 auto}
-.tech-row{display:flex; flex-wrap:wrap; gap:1rem; margin-top:2rem; align-items:center}
-.tech-pill{
-  font-family:'Press Start 2P',monospace; font-size:.55rem; padding:.6rem 1.2rem; background:#0D1B0D; border:2px solid #2D7D32; color:#66BB6A; letter-spacing:.05em; transition: all 0.2s; cursor: pointer;
-}
-.tech-pill:hover { background: #4CAF50; color: #050E05; transform: scale(1.05); box-shadow: 4px 4px 0 #1B5E20; }
-
-.footer{ background:#030A03; border-top:4px solid #1B5E20; padding:3rem 2rem; text-align:center; }
-.footer-logo{ font-family:'Press Start 2P',monospace; font-size:1rem; color:#4CAF50; text-shadow:3px 3px 0 #1B5E20; margin-bottom:1rem; display:block; }
-.footer-sub{color:#558B2F; font-family:'Press Start 2P',monospace; font-size:.5rem; letter-spacing:.1em}
-.pixel-divider{ width:100%; height:12px; background:repeating-linear-gradient(90deg,#1B5E20 0,#1B5E20 8px,#2D7D32 8px,#2D7D32 16px,#388E3C 16px,#388E3C 24px,#2D7D32 24px,#2D7D32 32px); margin:0; }
-
-@media(max-width:600px){ .about-grid{grid-template-columns:1fr} .hero-title{font-size:1.6rem} }
+@keyframes floatUp { 0% { opacity: 1; transform: translateY(0) scale(1); } 100% { opacity: 0; transform: translateY(-80px) scale(1.2); } }
+.info-section { padding: 80px 50px; background: #07101E; border-top: 2px solid #112238; }
+.info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; max-width: 1200px; margin: 0 auto; }
+.info-card { background: #0A1628; border: 2px solid var(--green-dark); padding: 30px; border-radius: 6px; }
+.info-card h3 { font-family: 'Press Start 2P', monospace; font-size: 12px; color: var(--amber-light); margin-bottom: 15px; }
+.info-card p { font-size: 14px; color: #B0BEC5; line-height: 1.6; }
+.footer-cta { text-align: center; padding: 90px 20px; background: radial-gradient(circle at top, #112540 0%, #07101E 100%); border-top: 2px solid var(--green-dark); }
+.footer-cta h2 { font-family: 'Press Start 2P', monospace; font-size: 20px; color: var(--white); margin-bottom: 20px; }
+.footer-cta p { font-size: 15px; color: var(--green-pale); margin-bottom: 35px; max-width: 500px; margin-left: auto; margin-right: auto; }
 </style>
 </head>
-<body class="crt-active">
+<body class="crt">
 
-<div class="crt-overlay"></div>
+<nav class="navbar">
+  <div class="nav-logo">🌲 ARBOLJUEGO</div>
+  <ul class="nav-links">
+    <li><a href="#juego">Juego</a></li>
+    <li><a href="#detalles">Características</a></li>
+    <li><a href="#descargar">Descargar App</a></li>
+  </ul>
+</nav>
 
-<div class="floating-controls">
-  <button class="control-btn" id="audioBtn" onclick="toggleAudio()">🔇 AUDIO: OFF</button>
-  <button class="control-btn" id="crtBtn" onclick="toggleCRT()">📺 CRT FILTRO: ON</button>
-</div>
-
-<div class="achievement-pop" id="achievePop">
-  <div class="ach-icon" id="achIcon">🏆</div>
-  <div>
-    <div class="ach-title">¡LOGRO DESBLOQUEADO!</div>
-    <div class="ach-text" id="achText">Has iniciado la simulación ambiental.</div>
-  </div>
-</div>
-
-<section class="hero" id="hero">
-  <div class="stars" id="stars"></div>
-  <div class="leaf-container" id="leaves"></div>
-  <div class="moon"></div>
-
-  <div class="float-obj" style="top:20%; left:8%; animation-delay:.5s"><div class="pixel-drop"></div></div>
-  <div class="float-obj" style="top:35%; right:12%; animation-delay:1.2s"><div class="pixel-drop" style="background:#81D4FA"></div></div>
-  <div class="float-obj" style="top:55%; left:6%; animation-delay:.8s"><div class="pixel-bag"></div></div>
-
-  <div class="pixel-tree" style="left:4%"><div class="pt-leaves2"></div><div class="pt-leaves"></div><div class="pt-trunk"></div></div>
-  <div class="pixel-tree" style="right:6%; bottom:90px"><div class="pt-leaves2" style="width:72px; height:48px"></div><div class="pt-leaves" style="width:60px; height:60px"></div><div class="pt-trunk" style="width:20px; height:32px"></div></div>
-  <div class="pixel-tree" style="left:16%; bottom:84px"><div class="pt-leaves2" style="width:36px; height:28px"></div><div class="pt-leaves" style="width:40px; height:40px"></div><div class="pt-trunk" style="width:12px; height:18px"></div></div>
-
-  <div class="ground"></div>
-
-  <div style="z-index:2; text-align:center; position:relative">
-    <p style="font-family:'Press Start 2P',monospace; font-size:.55rem; color:#558B2F; letter-spacing:.2em; margin-bottom:1.5rem">▶ INDIE GAME · GODOT 4 · 2D PLATFORMER</p>
-    <h1 class="hero-title">🌳 ÁRBOL<br>JUEGO</h1>
-    <p class="hero-sub">Planta · Limpia · Sobrevive<br>El mundo necesita héroes verdes</p>
-    <div>
-      <a class="btn-pixel sound-hover" href="#" onclick="triggerAchievement('🎮 JUGADOR UNO', '¡Conectado al servidor verde de simulación!')">▶ JUGAR AHORA</a>
-      <a class="btn-pixel secondary sound-hover" href="#features">VER MÁS ↓</a>
-      <a class="btn-pixel sound-hover" href="treeapp.apk" download="treeapp.apk" style="background: #1565C0; color: #ffffff; box-shadow: 4px 4px 0 #0D47A1;">📱 DESCARGAR APK</a>
+<section class="hero" id="juego">
+  <h1 class="game-title">SALVA EL PLANETA<br><span style="color:var(--amber-light)">UN CLICK A LA VEZ</span></h1>
+  <p class="game-subtitle">Demuestra tu compromiso ecológico en este simulador arcade interactivo. ¡Haz crecer tu árbol y desbloquea mejoras!</p>
+  
+  <div class="game-container">
+    <div class="stats-bar">
+      <div id="lbl-oxigeno">O₂: 0 kg</div>
+      <div id="lbl-multiplicador">X1</div>
     </div>
-  </div>
-
-  <p class="scroll-hint">↓ SCROLL ↓</p>
-</section>
-
-<div class="pixel-divider"></div>
-
-<section id="about" style="background:#080F08; padding:5rem 2rem">
-  <div class="section" style="padding:0; margin:0 auto">
-    <span class="section-label">El juego</span>
-    <h2 class="section-title">Salva el ecosistema,<br>un árbol a la vez.</h2>
-
-    <div class="about-grid">
-      <div class="about-text">
-        <p>En <strong>ArbólJuego</strong> controlas a un héroe ambiental en un mundo 2D pixelado que está al borde del colapso climático. El termómetro sube, la basura se acumula y los árboles desaparecen.</p>
-        <p>Recorre el mapa, <strong>recoge bolsas de basura</strong>, lleva <strong>semillas de agua</strong> a donde más hacen falta, y <strong>planta árboles</strong> para bajar la temperatura antes de que sea demasiado tarde.</p>
-        <p>Un juego ecológico hecho con <strong>Godot 4</strong>, con mecánicas de supervivencia, tienda de recursos y sistema de partículas de hojas.</p>
-      </div>
-
-      <div class="game-screen" onclick="triggerAchievement('⚡ OVERCLOCK', 'Hiciste clic en el motor gráfico de simulación.')">
-        <div class="game-screen-inner">
-          <div class="gs-hud">
-            <div><div class="gs-label">AGUA</div><div class="gs-val" id="hud-agua">💧 8</div></div>
-            <div><div class="gs-label">BASURA</div><div class="gs-val" id="hud-basura">🗑 3</div></div>
-            <div><div class="gs-label">TEMP</div><div class="gs-val" id="hud-temp">🌡 32°C</div></div>
-            <div><div class="gs-label">SCORE</div><div class="gs-val" id="hud-score">1420</div></div>
-          </div>
-          
-          <div style="margin-bottom: 12px;">
-            <div class="gs-label" id="thermo-label">ESTADO TÉRMICO CRÍTICO</div>
-            <div class="thermometer-container">
-              <div class="thermometer-bar" id="thermo-bar"></div>
-            </div>
-          </div>
-
-          <div>
-            <div style="display:flex; gap:2px; align-items:flex-end; height:50px; flex-wrap:wrap">
-              <div style="display:flex; flex-direction:column; gap:2px">
-                <div class="px-block px-sky2"></div><div class="px-block px-grass"></div><div class="px-block px-dirt"></div>
-              </div>
-              <div style="display:flex; flex-direction:column; gap:2px; align-items:center">
-                <div class="px-block" style="background:#2E7D32; clip-path:polygon(50% 0%,100% 100%,0% 100%); width:20px"></div>
-                <div class="px-block px-dirt" style="width:6px; margin:0 auto"></div><div class="px-block px-grass"></div>
-              </div>
-              <div style="display:flex; flex-direction:column; gap:2px">
-                <div class="px-block px-sky2"></div><div class="px-block px-player" style="width:12px; height:16px; border-radius:2px"></div><div class="px-block px-grass"></div>
-              </div>
-              <div style="display:flex; flex-direction:column; gap:2px">
-                <div class="px-block px-water" style="clip-path:polygon(50% 0%,100% 60%,50% 100%,0% 60%); width:10px; height:14px"></div><div class="px-block px-grass"></div>
-              </div>
-              <div style="display:flex; flex-direction:column; gap:2px">
-                <div class="px-block px-sky2"></div><div class="px-block px-trash" style="width:14px; height:14px; border-radius:2px"></div><div class="px-block px-grass"></div>
-              </div>
-            </div>
-            <div style="color:#2D7D32; margin-top:10px; font-size:.42rem" id="game-alert">▓▓▓▓▓░░░░░░ LIFE [WASD] EXPLORAR esc</div>
-          </div>
-        </div>
-      </div>
+    
+    <div class="click-zone" id="click-area" onclick="handleTreeClick(event)">
+      <svg class="pixel-tree" id="tree-asset" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="14" y="22" width="4" height="10" fill="#5D4037"/>
+        <rect x="13" y="25" width="1" height="4" fill="#4E342E"/>
+        <rect x="10" y="14" width="12" height="8" fill="#1B5E20"/>
+        <rect x="8" y="16" width="16" height="4" fill="#2D7D32"/>
+        <rect x="12" y="10" width="8" height="4" fill="#4CAF50"/>
+      </svg>
+    </div>
+    
+    <div class="controls-grid">
+      <button class="btn-pixel sound-hover" onclick="buyUpgrade()" id="btn-upgrade" style="background: var(--amber); color: #000; box-shadow: 4px 4px 0 #B7791F;">MEJORAR (Coste: 15)</button>
+      <button class="btn-pixel sound-hover" onclick="toggleAudio()" id="btn-audio" style="background: #455A64; color: #fff; box-shadow: 4px 4px 0 #263238;">🔇 AUDIO: OFF</button>
     </div>
   </div>
 </section>
 
-<div class="pixel-divider"></div>
-
-<section class="features-bg" id="features">
-  <div class="features-inner">
-    <span class="section-label">Mecánicas</span>
-    <h2 class="section-title">¿Qué puedes hacer?</h2>
-
-    <div class="features-grid">
-      <div class="feat-card"><span class="feat-icon">🌱</span><p class="feat-title">Planta árboles</p><p class="feat-desc">Compra semillas en la tienda y plántalas en los surcos del suelo. Cada árbol baja la temperatura del mundo.</p></div>
-      <div class="feat-card"><span class="feat-icon">🗑️</span><p class="feat-title">Recoge basura</p><p class="feat-desc">Las bolsas de basura aparecen en el mapa con un sistema de timer. Recógelas antes de que contaminen el ambiente.</p></div>
-      <div class="feat-card"><span class="feat-icon">💧</span><p class="feat-title">Gotas de agua</p><p class="feat-desc">Recolecta gotas de agua que caen por el escenario. Son tu recurso principal para regar y comprar en la tienda.</p></div>
-      <div class="feat-card"><span class="feat-icon">🌡️</span><p class="feat-title">Termómetro global</p><p class="feat-desc">El termómetro sube con el tiempo. Si llega al máximo, pierdes. Tus acciones ecológicas lo mantienen bajo control.</p></div>
-      <div class="feat-card"><span class="feat-icon">🏪</span><p class="feat-title">Tienda de semillas</p><p class="feat-desc">Abre el menú de tienda para comprar semillas especiales usando las gotas que recolectaste.</p></div>
-      <div class="feat-card"><span class="feat-icon">🍃</span><p class="feat-title">Partículas de hojas</p><p class="feat-desc">Sistema de partículas que emiten los árboles que plantas. El mundo se ve más vivo con cada árbol que crece.</p></div>
+<section class="info-section" id="detalles">
+  <div class="info-grid">
+    <div class="info-card">
+      <h3>Mecánica Retro</h3>
+      <p>Inspirado en los clásicos sistemas arcade de 8 bits. Cada pulsación simula los procesos de fotosíntesis, acumulando oxígeno virtual.</p>
+    </div>
+    <div class="info-card">
+      <h3>Mejoras Continuas</h3>
+      <p>Invierte el oxígeno generado para optimizar tus herramientas de riego, incrementando el rendimiento del ecosistema de manera exponencial.</p>
+    </div>
+    <div class="info-card">
+      <h3>Conexión Móvil</h3>
+      <p>Monitorea brigadas y reforestaciones reales desde tu dispositivo Android vinculando el progreso obtenido en esta plataforma.</p>
     </div>
   </div>
 </section>
 
-<div class="pixel-divider"></div>
-
-<section id="how-to-play" style="background:#080F08; padding:5rem 2rem">
-  <div style="max-width:960px; margin:0 auto">
-    <span class="section-label">Cómo jugar</span>
-    <h2 class="section-title">Cuatro pasos para salvar el planeta</h2>
-
-    <div class="htp-grid">
-      <div class="step"><p class="step-title">Muévete por el mapa</p><p class="step-desc">Usa WASD o las flechas del teclado para explorar el escenario 2D. El jugador tiene animaciones de caminata.</p></div>
-      <div class="step"><p class="step-title">Recolecta recursos</p><p class="step-desc">Toca las gotas de agua y las bolsas de basura que aparecen por el escenario para acumular recursos.</p></div>
-      <div class="step"><p class="step-title">Abre la tienda</p><p class="step-desc">Con suficientes gotas de agua, abre la tienda y compra semillas para poder plantar árboles.</p></div>
-      <div class="step"><p class="step-title">Planta y gana</p><p class="step-desc">Coloca las semillas en los surcos del suelo. Los árboles bajan el termómetro y te dan puntos de tiempo.</p></div>
-    </div>
+<section class="footer-cta" id="descargar">
+  <h2>¿Listo para llevar el control total?</h2>
+  <p>Conoce las características del Sistema de Gestión de Reforestación y descarga la versión móvil para Android.</p>
+  
+  <a class="btn-pixel sound-hover" href="app.html" style="background: #1565C0; color: #ffffff; box-shadow: 4px 4px 0 #0D47A1;">📱 DESCARGAR APK</a>
+  
+  <div style="margin-top:25px;">
+    <button class="btn-pixel" onclick="toggleCRT()" style="background:#212121; color:#aaa; font-size:8px; padding:8px; box-shadow: 2px 2px 0 #000;">CONMUTAR FILTRO CRT</button>
   </div>
 </section>
-
-<div class="pixel-divider"></div>
-
-<section class="tech-bg">
-  <div class="tech-inner">
-    <span class="section-label">Tecnología</span>
-    <h2 class="section-title">Construido con Godot 4</h2>
-    <p style="color:#A5D6A7; margin-top:1rem; line-height:1.8; max-width:540px">Un proyecto de videojuego 2D desarrollado en equipo usando Godot Engine 4, GDScript, y assets de spritesheet pixel art propios.</p>
-    <div class="tech-row">
-      <div class="tech-pill">GODOT 4</div><div class="tech-pill">GDSCRIPT</div><div class="tech-pill">2D PLATFORMER</div><div class="tech-pill">PIXEL ART</div><div class="tech-pill">TILEMAP</div><div class="tech-pill">CHARACTERBODY2D</div><div class="tech-pill">GITHUB</div>
-    </div>
-  </div>
-</section>
-
-<footer class="footer">
-  <span class="footer-logo">🌳 ÁRBOL JUEGO</span>
-  <p class="footer-sub" style="margin-top:.5rem">MADE WITH ❤ · GODOT 4 · ITD · 2026</p>
-  <p style="color:#1B5E20; font-size:.7rem; margin-top:1.5rem">El planeta no puede esperar. Empieza a plantar.</p>
-</footer>
 
 <script>
-// ================= SISTEMA DE ESTRELLAS DE FONDO =================
-const starsEl = document.getElementById('stars');
-for(let i=0; i<50; i++){
-  const s = document.createElement('div');
-  s.className = 'star';
-  const size = Math.random() < 0.7 ? 2 : 4;
-  s.style.cssText = `width:${size}px; height:${size}px; top:${Math.random()*65}%; left:${Math.random()*100}%; opacity:${.3+Math.random()*.7}; animation:blink ${1+Math.random()*3}s ${Math.random()*2}s infinite`;
-  starsEl.appendChild(s);
+let oxygen = 0;
+let multiplier = 1;
+let upgradeCost = 15;
+let audioCtx = null;
+let isAudioOn = false;
+let bgmInterval = null;
+
+function handleTreeClick(e) {
+  oxygen += multiplier;
+  updateUI();
+  if(isAudioOn) playTone(440 + (multiplier * 20), 'sine', 0.05);
+  
+  // Crear texto flotante de puntuación en el pixel exacto
+  const rect = e.currentTarget.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+  
+  const floater = document.createElement('div');
+  floater.className = 'floating-text';
+  floater.innerText = `+${multiplier}`;
+  floater.style.left = `${x}px`;
+  floater.style.top = `${y}px`;
+  
+  e.currentTarget.appendChild(floater);
+  setTimeout(() => floater.remove(), 800);
+  
+  // Efecto visual en el árbol SVG
+  const tree = document.getElementById('tree-asset');
+  tree.style.transform = 'scale(1.1)';
+  setTimeout(() => tree.style.transform = 'scale(1)', 100);
 }
 
-// ================= SISTEMA DE PARTÍCULAS DE HOJAS =================
-const leavesContainer = document.getElementById('leaves');
-const leafColors = ['#4CAF50', '#2D7D32', '#81C784', '#A5D6A7'];
-
-function createLeafParticle() {
-  const leaf = document.createElement('div');
-  leaf.className = 'pixel-leaf-particle';
-  const size = Math.random() > 0.5 ? 6 : 10;
-  const startX = Math.random() * 100;
-  const duration = 5 + Math.random() * 5;
-  const delay = Math.random() * 2;
-  
-  leaf.style.left = `${startX}vw`;
-  leaf.style.width = `${size}px`;
-  leaf.style.height = `${size}px`;
-  leaf.style.backgroundColor = leafColors[Math.floor(Math.random() * leafColors.length)];
-  leaf.style.animationDuration = `${duration}s`;
-  leaf.style.animationDelay = `${delay}s`;
-  
-  leavesContainer.appendChild(leaf);
-  setTimeout(() => leaf.remove(), (duration + delay) * 1000);
-}
-setInterval(createLeafParticle, 300);
-
-// ================= MOTOR DEL SIMULADOR DINÁMICO DE JUEGO =================
-let simAgua = 8; let simBasura = 3; let simTemp = 32; let simScore = 1420;
-const elAgua = document.getElementById('hud-agua'); const elBasura = document.getElementById('hud-basura');
-const elTemp = document.getElementById('hud-temp'); const elScore = document.getElementById('hud-score');
-const elThermoBar = document.getElementById('thermo-bar'); const elLabel = document.getElementById('thermo-label');
-const elAlert = document.getElementById('game-alert');
-
-function updateSimulator() {
-  let r = Math.random();
-  if(r < 0.35) { 
-    simAgua += 1; simScore += 10; elAgua.style.color = '#42A5F5';
-    setTimeout(() => elAgua.style.color = '#E8F5E9', 200);
-  } else if (r < 0.65) { 
-    if(simBasura > 0) { simBasura--; simScore += 50; elBasura.style.color = '#FFB300'; setTimeout(() => elBasura.style.color = '#E8F5E9', 200); }
-  } else if (r < 0.85 && simAgua >= 4) { 
-    simAgua -= 4; simTemp = Math.max(18, simTemp - 4); simScore += 120;
-    elTemp.style.color = '#66BB6A'; setTimeout(() => elTemp.style.color = '#E8F5E9', 200);
-  } else { 
-    simTemp += 2; if(Math.random() > 0.6) simBasura++;
-  }
-
-  if(simTemp > 45) simTemp = 24;
-  elAgua.innerHTML = `💧 ${simAgua}`; elBasura.innerHTML = `🗑 ${simBasura}`;
-  elTemp.innerHTML = `🌡 ${simTemp}°C`; elScore.innerHTML = `${simScore}`;
-
-  let pct = ((simTemp - 15) / 30) * 100;
-  elThermoBar.style.width = `${Math.min(100, Math.max(5, pct))}%`;
-
-  if(simTemp > 35) {
-    elThermoBar.style.backgroundColor = '#EF5350'; elLabel.innerHTML = "ALERT: COLAPSO TÉRMICO"; elLabel.style.color = '#EF5350';
-    elAlert.innerHTML = "❌ ALERTA CRÍTICA: ¡PLANTA ÁRBOLES!"; elAlert.style.color = '#EF5350';
+function buyUpgrade() {
+  if (oxygen >= upgradeCost) {
+    oxygen -= upgradeCost;
+    multiplier += 1;
+    upgradeCost = Math.floor(upgradeCost * 2.5);
+    updateUI();
+    if(isAudioOn) playTone(587.33, 'square', 0.15);
+    
+    // Evolución visual del árbol conforme aumenta el multiplicador
+    const tree = document.getElementById('tree-asset');
+    if(multiplier === 2) {
+      tree.innerHTML += '<rect x="6" y="12" width="20" height="4" fill="#1B5E20"/><circle cx="10" cy="14" r="2" fill="#E53935"/>';
+    } else if(multiplier === 5) {
+      tree.innerHTML += '<rect x="4" y="8" width="24" height="4" fill="#2E7D32"/><circle cx="22" cy="10" r="2" fill="#E53935"/>';
+    }
   } else {
-    elThermoBar.style.backgroundColor = simTemp > 26 ? '#FFB300' : '#4CAF50';
-    elLabel.innerHTML = "TERMÓMETRO GLOBAL EQUILIBRADO"; elLabel.style.color = '#4CAF50';
-    elAlert.innerHTML = "▓▓▓▓▓░░░░░░ HP  [WASD] EXPLORAR"; elAlert.style.color = '#2D7D32';
+    if(isAudioOn) playTone(150, 'sawtooth', 0.2);
   }
 }
-setInterval(updateSimulator, 1500);
 
-// ================= SISTEMA DE LOGROS (ACHIEVEMENTS) =================
-let unlockedAchievements = new Set();
-function triggerAchievement(title, description, icon = '🏆') {
-  if (unlockedAchievements.has(title)) return;
-  unlockedAchievements.add(title);
-
-  document.getElementById('achIcon').innerHTML = icon;
-  document.getElementById('achText').innerHTML = `<strong>${title}</strong><br>${description}`;
-  const pop = document.getElementById('achievePop');
-  
-  pop.classList.add('show');
-  playTone(523.25, 'square', 0.15); // Nota C5
-  setTimeout(() => playTone(659.25, 'square', 0.2), 150); // Nota E5
-  
-  setTimeout(() => pop.classList.remove('show'), 4000);
+function updateUI() {
+  document.getElementById('lbl-oxigeno').innerText = `O₂: ${oxygen} kg`;
+  document.getElementById('lbl-multiplicador').innerText = `X${multiplier}`;
+  document.getElementById('btn-upgrade').innerText = `MEJORAR (Coste: ${upgradeCost})`;
 }
-
-// Escuchar scroll para lanzar logros sorpresa
-window.addEventListener('scroll', () => {
-  if (window.scrollY > 300) triggerAchievement('🌿 ECO-EXPLORADOR', 'Has investigado la historia de nuestro bioma.', '📖');
-  if (window.scrollY > 1200) triggerAchievement('🛠️ DESARROLLADOR', 'Inspeccionaste el Tech Stack del juego.', '👾');
-});
-
-// ================= WEB AUDIO API RETRO SOUNDS =================
-let audioCtx = null; let bgmInterval = null; let isAudioOn = false;
 
 function toggleAudio() {
-  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  const btn = document.getElementById('btn-audio');
   isAudioOn = !isAudioOn;
-  const btn = document.getElementById('audioBtn');
-  if(isAudioOn) {
+  
+  if (!audioCtx) {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  }
+  
+  if (isAudioOn) {
     btn.innerHTML = "🔊 AUDIO: ON"; if (audioCtx.state === 'suspended') audioCtx.resume();
-    // BGM Procedural Loop
     const melody = [261.63, 329.63, 392.00, 440.00]; let step = 0;
     bgmInterval = setInterval(() => {
       if(isAudioOn && step % 2 === 0) playTone(melody[Math.floor(Math.random() * melody.length)], 'triangle', 0.2);
@@ -494,20 +221,9 @@ function playTone(freq, type, duration) {
   osc.start(); osc.stop(audioCtx.currentTime + duration);
 }
 
-function playBlip() { playTone(587.33, 'square', 0.05); }
 function toggleCRT() {
-  document.body.classList.toggle('crt-active');
-  const btn = document.getElementById('crtBtn');
-  btn.innerHTML = document.body.classList.contains('crt-active') ? "📺 CRT FILTRO: ON" : "📺 CRT FILTRO: OFF";
-  playBlip();
+  document.body.classList.toggle('crt');
 }
-
-// Vincular SFX de hover a elementos clave
-document.querySelectorAll('.sound-hover, .feat-card, .tech-pill, .step, .control-btn').forEach(el => {
-  el.addEventListener('mouseenter', playBlip);
-});
 </script>
 </body>
 </html>
-
-```
