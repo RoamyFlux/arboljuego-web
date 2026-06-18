@@ -1,3 +1,8 @@
+Para integrar la descarga directa de la aplicación móvil conservando intacta la estética retro y pixel art de la "Edición Coleccionista", he añadido un botón de descarga principal en la sección Hero y he adaptado la sección final de tecnologías con un bloque de descarga explícito para el archivo `TreeApp.apk`.
+
+Aquí tienes el código de `app.html` actualizado con los elementos de descarga:
+
+```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -114,6 +119,8 @@ body{
 .btn-pixel:hover{transform:translate(2px,2px); box-shadow:2px 2px 0 #1B5E20; background: #66BB6A;}
 .btn-pixel.secondary{background:transparent; color:#4CAF50; border:3px solid #4CAF50; box-shadow:4px 4px 0 #1B5E20}
 .btn-pixel.secondary:hover{background:#4CAF50; color:#0A1628}
+.btn-pixel.download-btn{background:var(--amber); color:#0A1628; box-shadow:4px 4px 0 var(--amber-light)}
+.btn-pixel.download-btn:hover{background:var(--amber-light); box-shadow:2px 2px 0 var(--amber)}
 
 @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
 .scroll-hint{ position:absolute; bottom:2rem; font-family:'Press Start 2P',monospace; font-size:.5rem; color:#4CAF50; letter-spacing:.1em; animation:bounce 1.5s infinite; z-index:2; }
@@ -188,7 +195,7 @@ body{
 .step-title{font-family:'Press Start 2P',monospace; font-size:.65rem; color:#4CAF50; margin-bottom:.6rem; line-height:1.6}
 .step-desc{color:#A5D6A7; font-size:.9rem; line-height:1.7}
 
-/* TECH PILLS INTERACTIVAS */
+/* TECH PILLS INTERACTIVAS Y ZONA DE INSTALACIÓN */
 .tech-bg{background:#050E05; padding:5rem 2rem}
 .tech-inner{max-width:960px; margin:0 auto}
 .tech-row{display:flex; flex-wrap:wrap; gap:1rem; margin-top:2rem; align-items:center}
@@ -242,8 +249,9 @@ body{
     <h1 class="hero-title">🌳 TREE<br>APP</h1>
     <p class="hero-sub">Gestión Inteligente de Reforestación<br>Diseñado para la administración eficiente de proyectos ecológicos</p>
     <div>
-      <a class="btn-pixel sound-hover" href="index.html" onclick="triggerAchievement('🎮 GAME START', '¡Volviendo al simulador interactivo!')">◀ VOLVER AL JUEGO</a>
-      <a class="btn-pixel secondary sound-hover" href="#features">VER FUNCIONES ↓</a>
+      <a class="btn-pixel sound-hover" href="index.html" onclick="triggerAchievement('🎮 GAME START', '¡Volviendo al simulador interactivo!')">◀ JUEGO</a>
+      <a class="btn-pixel download-btn sound-hover" href="TreeApp.apk" download onclick="triggerAchievement('📦 APK_FETCH', 'Iniciando descarga del instalador móvil.')">💾 DESCARGAR APK</a>
+      <a class="btn-pixel secondary sound-hover" href="#features">MÓDULOS ↓</a>
     </div>
   </div>
 
@@ -340,11 +348,17 @@ body{
 
 <div class="pixel-divider"></div>
 
-<section class="tech-bg">
+<section class="tech-bg" id="download-zone">
   <div class="tech-inner">
-    <span class="section-label">Infraestructura</span>
-    <h2 class="section-title">Tecnologías Integradas</h2>
-    <p style="color:#A5D6A7; margin-top:1rem; line-height:1.8; max-width:540px">Arquitectura cliente-servidor robusta y ligera optimizada para despliegues fluidos en entornos académicos e institucionales.</p>
+    <span class="section-label">Despliegue Técnico</span>
+    <h2 class="section-title">Instalación del Software</h2>
+    <p style="color:#A5D6A7; margin-top:1rem; margin-bottom:2rem; line-height:1.8; max-width:540px">Obtén el paquete de instalación oficial empaquetado para terminales Android compatibles.</p>
+    
+    <div style="margin-bottom: 3rem;">
+      <a class="btn-pixel download-btn sound-hover" href="TreeApp.apk" download onclick="triggerAchievement('📦 APK_FETCH', 'Iniciando descarga del instalador móvil.')" style="font-size: 0.9rem; padding: 1.2rem 2.5rem;">📥 DESCARGAR TREEAPP.APK v1.0</a>
+    </div>
+
+    <span class="section-label" style="border-color: #2D7D32; color: #2D7D32;">Infraestructura</span>
     <div class="tech-row">
       <div class="tech-pill">ANDROID APK</div><div class="tech-pill">SQL DATABASE</div><div class="tech-pill">LIGHTWEIGHT UI</div><div class="tech-pill">JSON API</div><div class="tech-pill">DATA STORAGE</div><div class="tech-pill">GITHUB</div>
     </div>
@@ -431,7 +445,7 @@ function updateSimulator() {
 }
 setInterval(updateSimulator, 1500);
 
-// ================= SISTEMA DE LOGROS (ACHIEVEMENTS) =================
+// ================= SISTEMENT DE LOGROS (ACHIEVEMENTS) =================
 let unlockedAchievements = new Set();
 function triggerAchievement(title, description, icon = '🏆') {
   if (unlockedAchievements.has(title)) return;
@@ -500,3 +514,5 @@ document.querySelectorAll('.sound-hover, .feat-card, .tech-pill, .step, .control
 </script>
 </body>
 </html>
+
+```
